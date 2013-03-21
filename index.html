@@ -3,8 +3,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>D3 Test</title>
+	<style>
+	body {
+		font-family: Helvetica, "Arial", sans-serif;
+	}
+	.axis path,
+	.axis line {
+	    fill: none;
+	    stroke: #eee;
+	    shape-rendering: crispEdges;
+	}
+
+	.hover {
+		color: red;
+	}
+
+	.axis text { font-size: 11px; }
+	.loading { font-style: italic;}
+	</style>
 </head>
 <body>
-	
+	<svg id="graph"></svg>
+	<script src="js/vendor/d3.js"></script>
+	<script src="js/data.json"></script>
+	<script src="js/application.js"></script>	
 </body>
 </html>
