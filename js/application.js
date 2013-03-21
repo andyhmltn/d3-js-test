@@ -121,6 +121,7 @@ d3.json(data, function(graph_data) {
 	   .append('circle')
 	   .on('mouseover', hover)
 	   .on('mouseout', hover_out)
+	   .on('mousemove', move_tooltip)
 	   .attr('class', 'circle')
 	   .attr('cx', function(d) { return x(d[1]); })
 	   .attr('cy', function(d) { return x(d[0]); })
@@ -130,21 +131,39 @@ d3.json(data, function(graph_data) {
 
 });
 
+var tooltip = d3.select("body")
+				.append("div")
+				.attr("class", "tooltip")
+				.style("position", "absolute")
+				.style("z-index", "10")
+				.style("visibility", "hidden")
+				.text("Tooltip!");
 	
-	var hover = function()
-	{
-		d3.select(this)
-		  .transition()
-		  .duration(100)
-		  .attr('fill', 'red')
-		  .attr('r', function(d) { return r(d[2]) * 1.4; });
-	};
+var hover = function(d)
+{
+	var me = this;
+	d3.select(this)
+	  .transition()
+	  .duration(100)
+	  .attr('fill', 'red')
+	  .attr('r', function(d) { return r(d[2]) * 1.4; });
 
-	var hover_out = function()
-	{
-		d3.select(this)
-		  .transition()
-		  .duration(100)
-		  .attr('fill', 'black')
-		  .attr('r', function(d) { return r(d[2]); });
-	}
+	  tooltip.style("visibility", "visible").text("Units: " + d[2]);
+};
+
+var move_tooltip = function()
+{
+	tooltip.style("top", (event.pageY-45)+"px").style("left",(event.pageX)+"px");
+}
+
+var hover_out = function()
+{
+	d3.select(this)
+	  .transition()
+	  .duration(100)
+	  .attr('fill', 'black')
+	  .attr('r', function(d) { return r(d[2]); });
+
+	tooltip.style("visibility", "hidden");
+}
+
